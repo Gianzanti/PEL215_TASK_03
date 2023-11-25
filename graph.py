@@ -1,7 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as mp
 from scipy.stats import norm
-from icecream import ic
 from matplotlib import animation
 
 def showGaussian():
@@ -57,98 +56,14 @@ def showGaussian():
 
         return ln1, tx1
     
-    ani = animation.FuncAnimation(fig, update, frames=data_points, interval=20, init_func=init, blit=True)
-    # ani.save('kalman.gif', writer='imagemagick', fps=60)
+    ani = animation.FuncAnimation(fig, update, frames=data_points + 39, interval=20, init_func=init, blit=True)
 
     writer = animation.FFMpegWriter(
         fps=31.25, metadata=dict(artist='Me'), bitrate=1800)
     ani.save("movie.mp4", writer=writer)
 
-    mp.show()
-
-    # fig = mp.figure(figsize=(8,6), dpi=100)
-    # ax = fig.add_subplot(111, aspect='equal')
-    # # y = norm.pdf(x, mu_pred[0], np.sqrt(S_pred[0,0]))e
-
-
-    # # # plotting current door locations
-    # # doors = [FIRST_DOOR[0], SECOND_DOOR[0], THIRD_DOOR[0]]
-    # # for door in doors:
-    # #     x = np.linspace(door-1, door+1, 50)
-    # #     y = norm.pdf(x, door, np.sqrt(0.02))
-    # #     ax.plot(x, y, '-', color='orange')
-
-    # # mp.show()
-
-    # for i in range(data_points):
-    #     # plotting predictions
-    #     for prediction in data['predictions']:
-    #         y = norm.pdf(x, prediction[0], np.sqrt(prediction[1]))
-    #         ax.plot(x, y, 'b-')
-
-    #     # plotting measurements
-    #     for measurement in data['measurements']:
-    #         y = norm.pdf(x, measurement[0], np.sqrt(measurement[1]))
-    #         ax.plot(x, y, 'g-')
-
-    #     # plotting corrections
-    #     for correction in data['corrections']:
-    #         y = norm.pdf(x, correction[0], np.sqrt(correction[1]))
-    #         ax.plot(x, y, 'r-')
-
-    #     # ax.grid()
-    #     # ax.legend(
-    #     #     ['Odometria', 'Medidas', 'Correção'], 
-    #     #     bbox_to_anchor=(0, 1.02, 1, 0.2), 
-    #     #     mode="expand", 
-    #     #     borderaxespad=0, 
-    #     #     ncol=3
-    #     # )
-
-
-    #     # #add legend to plot
-    #     # # mp.legend(title='Parameters')
-
-    #     #add axes labels and a title
-    #     mp.ylabel('Densidade')
-    #     mp.xlabel('Posição X (m)')
-    #     mp.title('Distribuição Normal do Mapa', fontsize=14)
-    #     mp.show()
-
-
-    # # plotting predictions
-    # for prediction in data['predictions']:
-    #     y = norm.pdf(x, prediction[0], np.sqrt(prediction[1]))
-    #     ax.plot(x, y, 'b-')
-
-    # # plotting measurements
-    # for measurement in data['measurements']:
-    #     y = norm.pdf(x, measurement[0], np.sqrt(measurement[1]))
-    #     ax.plot(x, y, 'g-')
-
-    # # plotting corrections
-    # for correction in data['corrections']:
-    #     y = norm.pdf(x, correction[0], np.sqrt(correction[1]))
-    #     ax.plot(x, y, 'r-')
-
-    # # ax.grid()
-    # # ax.legend(
-    # #     ['Odometria', 'Medidas', 'Correção'], 
-    # #     bbox_to_anchor=(0, 1.02, 1, 0.2), 
-    # #     mode="expand", 
-    # #     borderaxespad=0, 
-    # #     ncol=3
-    # # )
-
-
-    # # #add legend to plot
-    # # # mp.legend(title='Parameters')
-
-    # #add axes labels and a title
-    # mp.ylabel('Densidade')
-    # mp.xlabel('Posição X (m)')
-    # mp.title('Distribuição Normal do Mapa', fontsize=14)
     # mp.show()
+
 
 if __name__ == "__main__":
     showGaussian()
