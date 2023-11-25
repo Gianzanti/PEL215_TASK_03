@@ -59,7 +59,7 @@ def showGaussian():
     ani = animation.FuncAnimation(fig, update, frames=data_points + 39, interval=20, init_func=init, blit=True)
 
     writer = animation.FFMpegWriter(
-        fps=31.25, metadata=dict(artist='Me'), bitrate=1800)
+        fps=15, metadata=dict(artist='Me'), bitrate=1800)
     ani.save("movie.mp4", writer=writer)
 
     # mp.show()

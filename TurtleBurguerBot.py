@@ -48,11 +48,6 @@ class TurtleBurguerBot(ABC):
         self.v["x"] += speed
         self.v["x"] = self.v["x"] if self.v["x"] < self.max_speed else self.max_speed
 
-    def move_backward(self, speed):
-       
-        self.v["x"] -= speed
-        self.v["x"] = self.v["x"] if self.v["x"] > -self.max_speed else -self.max_speed
-
     def stop(self):
         self.v["x"] = 0
 
