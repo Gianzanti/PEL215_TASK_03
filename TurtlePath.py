@@ -3,35 +3,36 @@ from TurtleBurguerBot import TurtleBurguerBot
 import numpy as np
 from icecream import ic
 
-FIRST_DOOR = (-2.73, 0)
-SECOND_DOOR = (-0.735, 0)
-THIRD_DOOR = (2.73, 0)
-
 class TurtlePath(TurtleBurguerBot):
     def __init__(self, pos: tuple[float, float]):
         super().__init__(pos)
         self.state = "find-next-door"
 
         self.sigma_a = 0.2  # Desvio padrão de odometria [m]
-        self.sigma_z = 1.0   # Desvio padrão do sensor [m]
+        self.sigma_z = 0.1   # Desvio padrão do sensor [m]
         
         self.kf = KalmanFilter(self.timestep/1000, self.sigma_a, self.sigma_z, pos[0])
+
+        FIRST_DOOR = (-2.73, 0)
+        SECOND_DOOR = (-0.735, 0)
+        THIRD_DOOR = (2.73, 0)
         self.doors = [FIRST_DOOR[0], SECOND_DOOR[0], THIRD_DOOR[0]]
 
         steps = 1000
-        self.data_predictions = np.zeros((1000,), dtype='f,f')
-        self.data_measurements = np.zeros((1000,), dtype='f,f')
-        self.data_corrections = np.zeros((1000,), dtype='f,f')
+        self.data_predictions = np.zeros((steps,), dtype='f,f')
+        self.data_measurements = np.zeros((steps,), dtype='f,f')
+        self.data_corrections = np.zeros((steps,), dtype='f,f')
 
 
     def move(self):
         self.base_move()
 
     def odometry(self):
-        print(f'previous Position: x: {self.kf.x:2f}[m]')
-        [xbarra, Ebarra] = self.kf.predict(self.v["x"])
-        print(f'Position Predicted: x: {xbarra:2f}[m]')
-        self.data_predictions[self.steps] = (xbarra, Ebarra)
+        if (self.state != "stop"):
+            print(f'previous Position: x: {self.kf.x:2f}[m]')
+            [xbarra, Ebarra] = self.kf.predict(self.v["x"])
+            print(f'Position Predicted: x: {xbarra:2f}[m]')
+            self.data_predictions[self.steps] = (xbarra, Ebarra)
 
     def correctPrediction(self):
         ic(self.doors)
